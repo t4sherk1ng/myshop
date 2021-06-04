@@ -15,6 +15,9 @@ switch ($request["method"]) {
 	case 'sign_up':
 		$print = Shop_db::sign_up($request['login'], $request['password']);
 		break;
+	case 'get_all_products':
+		$print = json_encode(Shop_db::get_goods());
+		break;
 
 	default:
 		$print = json_encode(["Default"]);

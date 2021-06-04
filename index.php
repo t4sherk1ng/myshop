@@ -5,7 +5,7 @@ $auth = "frontend/html/auth.html";
 $bot = "frontend/html/bot.html";
 $main = "frontend/html/main_page.html";
 $html = file_get_contents($head);
-if (isset($_COOKIE['user'])) {
+if (isset($_COOKIE['user']) && $_COOKIE['user']) {
 	$html .= file_get_contents($main);
 }
 else {
