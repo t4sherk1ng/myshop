@@ -13,7 +13,7 @@ $(document).ready(() => {
 				console.log(response);
 				let cards_html = "";
 				response.forEach((item) => {
-					cards_html += get_card(item[1]);
+					cards_html += get_card(item[1], item[0]);
 				});
 				$("#cards").append(cards_html);
 			},
@@ -24,16 +24,46 @@ $(document).ready(() => {
 		});
 
 	$("#trash").click(() => {
-		console.log("Trash");
+		$.ajax({
+			method: "POST",
+			url: "api/api.php",
+			data: {method: "guest"},
+			dataType: "JSON",
+			success: (response) => {
+				console.log(response);
+			},
+			error: (error) => {
+				console.log(error);
+			},
+			async: true
+		});
 	});
 });
 
-function get_card(name, description="Описание") {
+function get_card(name, good_id, description="Описание") {
 	return `<div class="card" style="width: 18rem; display: inline-block" >
 				<div class="card-body">
 					<h5 class="card-title">${name}</h5>
 					<p class="card-text">${description}</p>
-					<a href="#" class="btn btn-primary">Купить</a>
+					<a href="#" id="buy" class="btn btn-primary" onclick="buy(this)" value="${good_id}">Купить</a>
 				</div>
 			</div>`;
+}
+
+function buy(el) {
+	// $.ajax({
+	// 	method: "POST",
+	// 	url: "api/api.php",
+	// 	data: {method: "buy", login: document.cookie.match("user\=(.+?)\;")[1], good_id: $(el).val()},
+	// 	dataType: "JSON",
+	// 	success: (response) => {
+	// 		console.log(response);
+	// 	},
+	// 	error: (error) => {
+	// 		console.log(error);
+	// 	},
+	// 	async: true
+	// });
+	console.log($($(el)[0]).val());
+
 }

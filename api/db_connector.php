@@ -65,7 +65,10 @@ class db_connector
 		$columns = '('.implode(', ', array_keys($__values_arr)).')';
 		$params_arr = '('.implode(', ', array_fill(0, count($__values_arr), '?')).')';
 		$sql = "INSERT INTO ".$__table_name.' '.$columns." VALUES ".$params_arr;
-		return self::query($sql, array_values($__values_arr));
+		$result = self::query($sql, array_values($__values_arr));
+		return ($result) 
+			? self::query("SELECT id FROM ".$__table_name." order by id desc limit 1")[0][0] 
+			: false;
 	}
 
 	static public function update_table($__table_name, $__values_arr, $__condition_arr=null) {
