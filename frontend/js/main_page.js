@@ -27,7 +27,7 @@ $(document).ready(() => {
 		$.ajax({
 			method: "POST",
 			url: "api/api.php",
-			data: {method: "guest"},
+			data: {method: "get_trash", login: document.cookie.match("user\=(.+?)\;")[1]},
 			dataType: "JSON",
 			success: (response) => {
 				console.log(response);
@@ -38,6 +38,8 @@ $(document).ready(() => {
 			async: true
 		});
 	});
+
+
 });
 
 function get_card(name, good_id, description="Описание") {
@@ -51,19 +53,19 @@ function get_card(name, good_id, description="Описание") {
 }
 
 function buy(el) {
-	// $.ajax({
-	// 	method: "POST",
-	// 	url: "api/api.php",
-	// 	data: {method: "buy", login: document.cookie.match("user\=(.+?)\;")[1], good_id: $(el).val()},
-	// 	dataType: "JSON",
-	// 	success: (response) => {
-	// 		console.log(response);
-	// 	},
-	// 	error: (error) => {
-	// 		console.log(error);
-	// 	},
-	// 	async: true
-	// });
-	console.log($($(el)[0]).val());
+	$.ajax({
+		method: "POST",
+		url: "api/api.php",
+		data: {method: "buy", login: document.cookie.match("user\=(.+?)\;")[1], good_id: el.getAttribute("value")},
+		dataType: "JSON",
+		success: (response) => {
+			console.log(response);
+		},
+		error: (error) => {
+			console.log(error);
+		},
+		async: true
+	});
+	console.log(el.getAttribute("value"));
 
 }

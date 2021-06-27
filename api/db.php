@@ -47,5 +47,12 @@ class Shop_db extends db_connector {
 		return self::insert_row("orders_goods", ["order_id" => $order_id, "good_id" => $__good_id]);
 	}
 
+	public static function get_goods_from_order($__order_id) {
+		return self::query("SELECT goods.id, goods_name FROM orders_goods LEFT OUTER JOIN goods ON orders_goods.good_id = goods.id WHERE orders_goods.order_id = ?", [$__order_id]);
+	}
 
+	public static function get_images_by_theme($__theme) {
+		$images = self::query("SELECT pathes.path, url FROM images LEFT OUTER JOIN pathes ON pathes.id = images.path_id WHERE theme = ?", [$__theme]);
+		return array_map(function($arr) {return $arr[0].$arr[1];}, $images);
+	}
 }

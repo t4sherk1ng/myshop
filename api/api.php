@@ -21,6 +21,9 @@ switch ($request["method"]) {
 	case 'buy':
 		$print = Shop_db::add_good_to_order($request['login'], $request['good_id']);
 		break;
+	case 'get_trash':
+		$print = json_encode(Shop_db::get_goods_from_order(Shop_db::get_alive_order_id_by_user($request['login'])));
+		break;
 
 	default:
 		$print = json_encode(["Default"]);
